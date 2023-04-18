@@ -31,7 +31,13 @@ public class Uloziste {
             throw new RuntimeException(e);
         } catch (IOException e){
             throw new RuntimeException(e);
+        }finally {
+            //používá se pro uklizení souborů když není metoda, která by se po zápisu i sama uzavřela
+            // totéž udělá i závorka za try
         }
+
+        //takhle nejsou vyjímky dobře zachycené
+        //pozor na prázdný catchblock (tzn. chybí throw), pokud bych ho opravdu potřebovala, tak aspoň napsat komentář, že ta situace nemůže nastat HAHA
         cat = new Cat(ulozenaPlocha.getCat());
         mouse = new Mouse(ulozenaPlocha.getMouse());
         for (Point treePoint : ulozenaPlocha.getTrees()) {
