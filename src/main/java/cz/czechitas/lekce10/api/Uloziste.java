@@ -35,27 +35,21 @@ public class Uloziste {
         nacistStavZeSouboru(Paths.get("stav.json"));
     }
 
-    public void ulozitStavDoSouboru(Path path)  throws IOException {
-
-       UlozenyStav ulozenyStav = new UlozenyStav(); // Vytvořit objekt UlozenyStav
-       ulozenyStav.setCat(cat.getLocation());
-       ulozenyStav.setMouse(mouse.getLocation());// Uložit do něj souřadnice kočky a myši – souřadnice získáte voláním getLocation()
-       objectMapper.writeValue(path.toFile(),ulozenyStav);   // Uložit objekt UlozenyStav do souboru pomocí objectMapper.writeValue(file, object)
-
-
+    public void ulozitStavDoSouboru(Path path) throws IOException {
+        UlozenyStav ulozenyStav = new UlozenyStav(); // Vytvořit objekt UlozenyStav
+        ulozenyStav.setCat(cat.getLocation());
+        ulozenyStav.setMouse(mouse.getLocation());// Uložit do něj souřadnice kočky a myši – souřadnice získáte voláním getLocation()
+        objectMapper.writeValue(path.toFile(), ulozenyStav);   // Uložit objekt UlozenyStav do souboru pomocí objectMapper.writeValue(file, object)
     }
 
     public void ulozitStavDoSouboru() throws IOException {
         ulozitStavDoSouboru(Paths.get("stav.json"));
     }
 
-    public void nacistStavZeSouboru(Path path)  throws IOException {
-
-      UlozenyStav ulozenyStav = objectMapper.readValue(path.toFile(), UlozenyStav.class);// Načíst objekt UlozenyStav pomocí objectMapper.readValue(file, UlozenyStav.class)
-      mouse.setLocation(ulozenyStav.getMouse());// Získat z UlozenyStav souřadnice kočky a myši
-      cat.setLocation(ulozenyStav.getCat());// Zapsat tyto souřadnice do objektů kočky a myši pomocí setLocation()
-
-
+    public void nacistStavZeSouboru(Path path) throws IOException {
+        UlozenyStav ulozenyStav = objectMapper.readValue(path.toFile(), UlozenyStav.class);// Načíst objekt UlozenyStav pomocí objectMapper.readValue(file, UlozenyStav.class)
+        mouse.setLocation(ulozenyStav.getMouse());// Získat z UlozenyStav souřadnice kočky a myši
+        cat.setLocation(ulozenyStav.getCat());// Zapsat tyto souřadnice do objektů kočky a myši pomocí setLocation()
     }
 
     /*   public void ulozitPlochuZeSouboru(Path path) throws IOException {
