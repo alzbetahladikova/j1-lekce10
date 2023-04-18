@@ -3,6 +3,8 @@ package cz.czechitas.lekce10.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.awt.*;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,11 +22,14 @@ public class Uloziste {
         nacistPlochuZeSouboru(Path.of("level-01.json"));
     }
 
-    public void nacistPlochuZeSouboru(Path path)  {
+    public void nacistPlochuZeSouboru(Path path) {
         UlozenaPlocha ulozenaPlocha = null;
         try {
             ulozenaPlocha = objectMapper.readValue(path.toFile(), UlozenaPlocha.class);
-        } catch (IOException e) {
+        } catch (FileNotFoundException | EOFException e) {
+            System.out.println("...");
+            throw new RuntimeException(e);
+        } catch (IOException e){
             throw new RuntimeException(e);
         }
         cat = new Cat(ulozenaPlocha.getCat());
