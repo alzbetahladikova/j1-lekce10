@@ -20,8 +20,13 @@ public class Uloziste {
         nacistPlochuZeSouboru(Path.of("level-01.json"));
     }
 
-    public void nacistPlochuZeSouboru(Path path) throws IOException {
-        UlozenaPlocha ulozenaPlocha = objectMapper.readValue(path.toFile(), UlozenaPlocha.class);
+    public void nacistPlochuZeSouboru(Path path)  {
+        UlozenaPlocha ulozenaPlocha = null;
+        try {
+            ulozenaPlocha = objectMapper.readValue(path.toFile(), UlozenaPlocha.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         cat = new Cat(ulozenaPlocha.getCat());
         mouse = new Mouse(ulozenaPlocha.getMouse());
         for (Point treePoint : ulozenaPlocha.getTrees()) {
