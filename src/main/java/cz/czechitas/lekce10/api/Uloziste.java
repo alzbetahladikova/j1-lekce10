@@ -14,8 +14,14 @@ public class Uloziste {
     private Mouse mouse;
 
 
-    public void nacistPlochuZeSouboru(Path file) throws IOException {
-        UlozenaPlocha ulozenaPlocha = objectMapper.readValue(file.toFile(), UlozenaPlocha.class);
+    public void nacistPlochuZeSouboru() throws IOException {
+        //nacistPlochuZeSouboru(Paths.get("level-01.json"));
+        //pouze pro ukázku
+        nacistPlochuZeSouboru(Path.of("level-01.json"));
+    }
+
+    public void nacistPlochuZeSouboru(Path path) throws IOException {
+        UlozenaPlocha ulozenaPlocha = objectMapper.readValue(path.toFile(), UlozenaPlocha.class);
         cat = new Cat(ulozenaPlocha.getCat());
         mouse = new Mouse(ulozenaPlocha.getMouse());
         for (Point treePoint : ulozenaPlocha.getTrees()) {
@@ -25,31 +31,39 @@ public class Uloziste {
         new Meat(ulozenaPlocha.getMeat());
     }
 
-    public void nacistPlochuZeSouboru() throws IOException {
-        nacistPlochuZeSouboru(Paths.get("level-01.json"));
-    }
-
-    public void nacistStavZeSouboru(Path path)  throws IOException {
-        // TODO
-        // Načíst objekt UlozenyStav pomocí objectMapper.readValue(file, UlozenyStav.class)
-        // Získat z UlozenyStav souřadnice kočky a myši
-        // Zapsat tyto souřadnice do objektů kočky a myši pomocí setLocation()
-    }
-
     public void nacistStavZeSouboru() throws IOException {
         nacistStavZeSouboru(Paths.get("stav.json"));
     }
 
     public void ulozitStavDoSouboru(Path path)  throws IOException {
-        // TODO
-        // Vytvořit objekt UlozenyStav
-        // Uložit do něj souřadnice kočky a myši – souřadnice získáte voláním getLocation()
-        // Uložit objekt UlozenyStav do souboru pomocí objectMapper.writeValue(file, object)
+
+       UlozenyStav ulozenyStav = new UlozenyStav(); // Vytvořit objekt UlozenyStav
+       ulozenyStav.setCat(cat.getLocation());
+       ulozenyStav.setMouse(mouse.getLocation());// Uložit do něj souřadnice kočky a myši – souřadnice získáte voláním getLocation()
+       objectMapper.writeValue(path.toFile(),ulozenyStav);   // Uložit objekt UlozenyStav do souboru pomocí objectMapper.writeValue(file, object)
+
+
     }
 
     public void ulozitStavDoSouboru() throws IOException {
         ulozitStavDoSouboru(Paths.get("stav.json"));
     }
+
+    public void nacistStavZeSouboru(Path path)  throws IOException {
+
+      UlozenyStav ulozenyStav = objectMapper.readValue(path.toFile(), UlozenyStav.class);// Načíst objekt UlozenyStav pomocí objectMapper.readValue(file, UlozenyStav.class)
+      mouse.setLocation(ulozenyStav.getMouse());// Získat z UlozenyStav souřadnice kočky a myši
+      cat.setLocation(ulozenyStav.getCat());// Zapsat tyto souřadnice do objektů kočky a myši pomocí setLocation()
+
+
+    }
+
+    /*   public void ulozitPlochuZeSouboru(Path path) throws IOException {
+           UlozenaPlocha ulozenaPlocha = null;
+          objectMapper.writeValue(path.toFile(),ulozenaPlocha);
+       }
+ // zbytečné jen pro ukázku
+     */
 
     public Cat getCat() {
         return cat;

@@ -6,6 +6,7 @@ import cz.czechitas.lekce10.engine.swing.MainWindow;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Hlaví třída pro hru Kočka–myš–sýr.
@@ -33,7 +34,7 @@ public class HlavniProgram {
         MainWindow.getInstance().getUlozitStavButton().addActionListener(this::handleUlozitAction);
         MainWindow.getInstance().getNacistStavButton().addActionListener(this::handleNacistAction);
 
-        uloziste.nacistPlochuZeSouboru();
+      uloziste.nacistPlochuZeSouboru(Path.of("level-02.json"));
 
         tom = uloziste.getCat();
         //tom.setBrain(new KeyboardBrain(KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D));
